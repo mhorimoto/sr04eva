@@ -19,6 +19,8 @@ unsigned long duration;
 double distance = 0;
 double speed_of_sound = 331.5 + 0.6 * 25; // 25℃の気温の想定
 
+void (* resetFunc)(void) = 0;
+
 void setup() {
   Serial.begin( 9600 );
 
@@ -27,7 +29,7 @@ void setup() {
   digitalWrite(TRIG,LOW);
   digitalWrite(ECHO,LOW);
   pinMode(13,OUTPUT);
-  Serial.println("OK V201");
+  Serial.println("OK V202");
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;); // Don't proceed, loop forever
@@ -36,7 +38,7 @@ void setup() {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0,0);
-  display.println("Distance V200");
+  display.println("Distance V202");
   display.println("");
   display.setTextSize(3);
   display.println("450.00");
@@ -65,7 +67,7 @@ void loop() {
       display.setTextSize(1);
       display.setTextColor(SSD1306_WHITE);
       display.setCursor(0,0);
-      display.println("Distance V200");
+      display.println("Distance V201");
       display.println("");
       display.setTextSize(3);
       display.println(distance);
@@ -74,10 +76,11 @@ void loop() {
       display.display();
       delay(500);
     } else {
-      display.setCursor(0,24);
+      display.setCursor(0,40);
       display.setTextSize(2);
       display.print("0");
       display.display();
+      resetFunc();
     }
     delay(500);
 }

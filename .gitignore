@@ -30,3 +30,4 @@ fp-info-cache
 *.elf
 lowcore/build/*
 
+*.FCStd?
